@@ -27,6 +27,7 @@ CheckExtension('msi');
 CheckExtension('scr');
 CheckExtension('hta');
 CheckExtension('pif');
+CheckExtension('com');
 
 -- Unix/Linux --
 CheckExtension('sh');
