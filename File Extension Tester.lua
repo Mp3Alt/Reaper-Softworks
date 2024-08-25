@@ -73,4 +73,4 @@ for i,v in pairs(Output) do
 end
 
 print('| File Extension Tester | Reaper Softworks');
-print(`| ✅ Pass - {#Output.Pass} | ❌ Failed - {#Output.Fail}\n`);
+print(`| ✅ Blocked - {#Output.Pass} | ❌ Not Blocked - {#Output.Fail}\n`);
