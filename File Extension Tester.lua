@@ -35,7 +35,7 @@ end
 for status, list in pairs(Output) do
 	local symbol = status == 'Fail' and '❌' or '✅';
 	for _, ext in ipairs(list) do
-		output = status == 'Fail' and warn or print
+		output = status == 'Fail' and warn or print;
 		output(symbol .. ' .'.. ext);
 	end
 end
