@@ -1,73 +1,45 @@
 local Output = {Pass = {}, Fail = {}};
+local extensions = {
+    -- Windows
+    'exe', 'bat', 'cmd', 'vbs', 'ps1', 'msi', 'scr', 'hta', 'pif', 'com',
+    -- Unix/Linux
+    'sh', 'bash',
+    -- MacOS
+    'command', 'rb',
+    -- Web Development
+    'php', 'asp', 'aspx', 'jsp', 'js',
+    -- Cross-Platform
+    'jar', 'py', 'pl',
+    -- Others
+    'dll', 'so', 'class', 'psm1', 'vb'
+}
+
 makefolder('File_Test');
 
-local function CheckExtension(extention)
-    local Success, Message = pcall(function()
-        return writefile('File_Test/test.'.. extention, 'Test')
-    end)
-    local Success2, Message = pcall(function()
-        return writefile('File_Test/test.'.. string.upper(extention), 'Test')
-    end)
+local function CheckExtension(extension)
+    local function testFunction(ext)
+        return pcall(writefile, 'File_Test/test.'.. ext, 'Test');
+    end
 
-    if Success or Success2 then
-        table.insert(Output.Fail, extention);
+    if testFunction(extension) or testFunction(string.upper(extension)) then
+        table.insert(Output.Fail, extension);
     else
-        table.insert(Output.Pass, extention);
+        table.insert(Output.Pass, extension);
     end
 end
 
-
--- Windows --
-CheckExtension('exe');
-CheckExtension('bat');
-CheckExtension('cmd');
-CheckExtension('vbs');
-CheckExtension('ps1');
-CheckExtension('msi');
-CheckExtension('scr');
-CheckExtension('hta');
-CheckExtension('pif');
-CheckExtension('com');
-
--- Unix/Linux --
-CheckExtension('sh');
-CheckExtension('bash');
-
--- MacOS --
-CheckExtension('command');
-CheckExtension('rb');
-
--- Web Development --
-CheckExtension('php');
-CheckExtension('asp');
-CheckExtension('aspx');
-CheckExtension('jsp');
-CheckExtension('js');
-
--- Cross-Platform --
-CheckExtension('jar');
-CheckExtension('py');
-CheckExtension('pl');
-
--- Others --
-CheckExtension('dll');
-CheckExtension('so');
-CheckExtension('class');
-CheckExtension('psm1');
-CheckExtension('vb');
-
-print('\n\n');
-for i,v in pairs(Output) do
-    if i == 'Fail' then
-        for i,v in pairs(v) do
-            warn('❌ .'.. v)
-        end
-    else
-        for i,v in pairs(v) do
-            print('✅ .'.. v)
-        end
-    end
+for _, ext in ipairs(extensions) do
+    CheckExtension(ext);
 end
+
+for status, list in pairs(Output) do
+	local symbol = status == 'Fail' and '❌' or '✅';
+	for _, ext in ipairs(list) do
+		output = status == 'Fail' and warn or print
+		output(symbol .. ' .'.. ext);
+	end
+end
+
 
 print('| File Extension Tester | Reaper Softworks');
-print(`| ✅ Blocked - {#Output.Pass} | ❌ Not Blocked - {#Output.Fail}\n`);
+print(string.format('| ✅ Blocked - %d | ❌ Not Blocked - %d\n', #Output.Pass, #Output.Fail));
