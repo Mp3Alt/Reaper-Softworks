@@ -31,13 +31,9 @@ CheckExtension('pif');
 -- Unix/Linux --
 CheckExtension('sh');
 CheckExtension('bash');
-CheckExtension('py');
-CheckExtension('rb');
 
 -- MacOS --
 CheckExtension('command');
-CheckExtension('sh');
-CheckExtension('bash');
 CheckExtension('rb');
 
 -- Web Development --
